@@ -1,0 +1,22 @@
+{
+    "name": "lambq/sdk",
+    "description": "this a sdk for laravel5.* composer packagist.",
+    "keywords": ["sdk", "lambq", "laravel"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lambq",
+            "email": "415113157@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lambq\\Sdk\\": "src/"
+        }
+    }
+}
