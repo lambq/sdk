@@ -1,6 +1,6 @@
 <?php
 
-namespace Lambq\sdk\Facades;
+namespace Lambq\Sdk\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -8,15 +8,14 @@ class BaiduPushZZ extends Facade
 {
 		protected $config;
 
-		public function __construct(array $config) {
-        $this->config  = $config;
-				
+		public function __construct() {
+        $this->config['site']		= config('sdk.baidu_push_zz_site');
+				$this->config['token']	= config('sdk.baidu_push_zz_token');
     }
 
 		/** 百度站长链接推送 **/
-		function zhanzhang_push_baidu($url){
-			$urls = [$url];
-			$api = 'http://data.zz.baidu.com/urls?site=www.webshowu.com&token=6ujhg0alnRLbwZr7';
+		function push(array $urls){
+			$api = 'http://data.zz.baidu.com/urls?site='.$this->config['site'].'&token='.$this->config['token'];
 			$ch = curl_init();
 			$options =  array(
 					CURLOPT_URL => $api,
