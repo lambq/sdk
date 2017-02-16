@@ -2,7 +2,7 @@
 
 ## Installation/安装
 ```shell
-composer require "lambq/geetest:dev-master"
+composer require "lambq/sdk:dev-master"
 ```
 
 ### laravel 5.*
@@ -25,9 +25,7 @@ php artisan vendor:publish
 
 ```php
 return [
-    'captcha_id'            => '',
-    'private_key'           => '',
-    'mobile_captcha_id'     => '',
-    'mobile_private_key'    => '',
+    'baidu_push_zz_site'	=> '',
+    'baidu_push_zz_token' => '',
 ];
 ```
