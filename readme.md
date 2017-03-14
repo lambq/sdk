@@ -25,7 +25,8 @@ php artisan vendor:publish
 
 ```php
 return [
-    'baidu_push_zz_site'	=> '',
-    'baidu_push_zz_token' => '',
+    'baidu_push_zz_site'    => '',
+    'baidu_push_zz_token'   => '',
+    'zz_api'                => '',
 ];
 ```
