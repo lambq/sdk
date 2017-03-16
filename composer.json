@@ -1,7 +1,7 @@
 {
     "name": "lambq/sdk",
     "description": "this a sdk for laravel5.* composer packagist.",
-    "keywords": ["sdk", "lambq", "laravel"],
+    "keywords": ["sdk", "lambq", "laravel", "tool"],
     "type": "library",
     "license": "MIT",
     "authors": [
