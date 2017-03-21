@@ -44,6 +44,17 @@ class Yunzz extends Facade
         //初始化
         $url    = "https://yun.zzs1.com/native_api/alexa_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
+        if(array_key_exists('status',$result)){
+            return [
+                'reach_rank'    => 0,
+                'traffic_rank'  => 0,
+            ];
+        }else{
+            return [
+                'reach_rank'    => $result['reach_rank'],
+                'traffic_rank'  => $result['traffic_rank'],
+            ];
+        }
         return $result;
     }
     /** Google PR查询API **/
@@ -157,6 +168,157 @@ class Yunzz extends Facade
         $url    = "https://yun.zzs1.com/native_api/sogou_backlink_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
+    }
+
+    /** 网站权重查询API **/
+    public function domainrank($site){
+        $url    = "https://yun.zzs1.com/native_api/domainrank?api_key=".$this->config['api']."&domain=$site";
+        $result = $this->file_get_contents_curl($url);
+        if($result['status'] == 0){
+            return [
+                'google'    => 0,
+                'baidu'     => 0,
+                'so'        => 0,
+                'sogou'     => 0,
+            ];
+        }else{
+            return [
+                'google'    => $result['google'],
+                'baidu'     => $result['baidu'],
+                'so'        => $result['so'],
+                'sogou'     => $result['sogou'],
+            ];
+        }
+    }
+    /** 网站反链查询AP **/
+    public function domainbacklink($site){
+        $url    = "https://yun.zzs1.com/native_api/domainbacklink?api_key=".$this->config['api']."&domain=$site";
+        $result = $this->file_get_contents_curl($url);
+        if($result['status'] == 0){
+            return [
+                'google'    => 0,
+                'baidu'     => 0,
+                'bing'      => 0,
+                'yahoo'     => 0,
+                'so'        => 0,
+                'sogou'     => 0,
+            ];
+        }else{
+            return [
+                'google'    => $result['google'],
+                'baidu'     => $result['baidu'],
+                'bing'      => $result['bing'],
+                'yahoo'     => $result['yahoo'],
+                'so'        => $result['so'],
+                'sogou'     => $result['sogou'],
+            ];
+        }
+    }
+    /** 网站收录查询API **/
+    public function domainindexd($site){
+        $url    = "https://yun.zzs1.com/native_api/domainindexd?api_key=".$this->config['api']."&domain=$site";
+        $result = $this->file_get_contents_curl($url);
+        if($result['status'] == 0){
+            return [
+                'google'    => 0,
+                'baidu'     => 0,
+                'bing'      => 0,
+                'yahoo'     => 0,
+                'so'        => 0,
+                'sogou'     => 0,
+            ];
+        }else{
+            return [
+                'google'    => $result['google'],
+                'baidu'     => $result['baidu'],
+                'bing'      => $result['bing'],
+                'yahoo'     => $result['yahoo'],
+                'so'        => $result['so'],
+                'sogou'     => $result['sogou'],
+            ];
+        }
+    }
+    /** 网站备案查询API **/
+    public function domainbeian($site){
+        $url    = "https://yun.zzs1.com/native_api/domainbeian?api_key=".$this->config['api']."&domain=$site";
+        $result = $this->file_get_contents_curl($url);
+        print_r($result);
+        if($result['status'] == 0){
+            return [
+                'domain'            => 0,
+                'icpno'             => 0,
+                'sitenm'            => 0,
+                'webhome'           => 0,
+                'organizers'        => 0,
+                'organizers_type'   => 0,
+                'exadate'           => 0,
+            ];
+        }else{
+            if($result['total_share']['success'] == 1){
+                return [
+                    'domain'            => $result['total_share']['result']['domain'],
+                    'icpno'             => $result['total_share']['result']['icpno'],
+                    'sitenm'            => $result['total_share']['result']['sitenm'],
+                    'webhome'           => $result['total_share']['result']['webhome'],
+                    'organizers'        => $result['total_share']['result']['organizers'],
+                    'organizers_type'   => $result['total_share']['result']['organizers_type'],
+                    'exadate'           => $result['total_share']['result']['exadate'],
+                ];
+            }else{
+                return [
+                    'domain'            => 0,
+                    'icpno'             => 0,
+                    'sitenm'            => 0,
+                    'webhome'           => 0,
+                    'organizers'        => 0,
+                    'organizers_type'   => 0,
+                    'exadate'           => 0,
+                ];
+            }
+        }
+    }
+    /** Domain IP 查询API **/
+    public function domain_ip_check($site){
+        $url    = "https://yun.zzs1.com/native_api/domain_ip_check?api_key=".$this->config['api']."&domain=$site";
+        $result = $this->file_get_contents_curl($url);
+        if(array_key_exists('status', $result)){
+            return [
+                'isp'       => 0,
+                'ip'        => 0,
+                'city'      => 0,
+                'region'    => 0,
+                'country'   => 0,
+                'time_zone' => 0,
+                'longitude' => 0,
+                'latitude'  => 0,
+            ];
+        }else{
+            return [
+                'isp'       => $result['isp'],
+                'ip'        => $result['ip'],
+                'city'      => $result['city'],
+                'region'    => $result['region'],
+                'country'   => $result['country'],
+                'time_zone' => $result['time_zone'],
+                'longitude' => $result['longitude'],
+                'latitude'  => $result['latitude'],
+            ];
+        }
+    }
+
+    /** 新接口 **/
+    public function new_seo($url){
+        $json   = json_encode([
+            'url'               => $url,    //域名
+            'whois_check'       => $this->whois_check($url),
+            'alexa_check'       => $this->alexa_check($url),    //Alexa 查询API
+            'domainrank'        => $this->domainrank($url), //网站权重查询API
+            'domainbacklink'    => $this->domainbacklink($url),    //网站反链查询AP
+            'domainindexd'      => $this->domainindexd($url),   //网站收录查询API
+//            'domainbeian'       => $this->domainbeian($url),    //网站备案查询API
+            'domain_ip_check'   => $this->domain_ip_check($url),  //Domain IP 查询API
+        ]);
+        return $json;
     }
     /** 全部请求并返回 **/
     public function seo_all($url){
