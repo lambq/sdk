@@ -169,7 +169,6 @@ class Yunzz extends Facade
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
-
     /** 网站权重查询API **/
     public function domainrank($site){
         $url    = "https://yun.zzs1.com/native_api/domainrank?api_key=".$this->config['api']."&domain=$site";
@@ -240,41 +239,43 @@ class Yunzz extends Facade
     }
     /** 网站备案查询API **/
     public function domainbeian($site){
+        preg_match('/(.*\.)?\w+\.\w+$/', $site, $matches);
+        $site   = str_replace($matches[1],'',$site);
         $url    = "https://yun.zzs1.com/native_api/domainbeian?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
-        print_r($result);
-        if($result['status'] == 0){
-            return [
-                'domain'            => 0,
-                'icpno'             => 0,
-                'sitenm'            => 0,
-                'webhome'           => 0,
-                'organizers'        => 0,
-                'organizers_type'   => 0,
-                'exadate'           => 0,
-            ];
-        }else{
-            if($result['total_share']['success'] == 1){
+        if($result['success'] == 1){
+            $array  = $result['result'];
+            if($array['status'] == 'ALREADY_BEIAN'){
                 return [
-                    'domain'            => $result['total_share']['result']['domain'],
-                    'icpno'             => $result['total_share']['result']['icpno'],
-                    'sitenm'            => $result['total_share']['result']['sitenm'],
-                    'webhome'           => $result['total_share']['result']['webhome'],
-                    'organizers'        => $result['total_share']['result']['organizers'],
-                    'organizers_type'   => $result['total_share']['result']['organizers_type'],
-                    'exadate'           => $result['total_share']['result']['exadate'],
+                    'domain'            => $array['domain'],
+                    'icpno'             => $array['icpno'],
+                    'sitenm'            => $array['sitenm'],
+                    'webhome'           => $array['webhome'],
+                    'organizers'        => $array['organizers'],
+                    'organizers_type'   => $array['organizers_type'],
+                    'exadate'           => $array['exadate'],
                 ];
             }else{
                 return [
-                    'domain'            => 0,
-                    'icpno'             => 0,
-                    'sitenm'            => 0,
-                    'webhome'           => 0,
-                    'organizers'        => 0,
-                    'organizers_type'   => 0,
-                    'exadate'           => 0,
+                    'domain'            => null,
+                    'icpno'             => null,
+                    'sitenm'            => null,
+                    'webhome'           => null,
+                    'organizers'        => null,
+                    'organizers_type'   => null,
+                    'exadate'           => null,
                 ];
             }
+        }else{
+            return [
+                'domain'            => null,
+                'icpno'             => null,
+                'sitenm'            => null,
+                'webhome'           => null,
+                'organizers'        => null,
+                'organizers_type'   => null,
+                'exadate'           => null,
+            ];
         }
     }
     /** Domain IP 查询API **/
@@ -305,7 +306,6 @@ class Yunzz extends Facade
             ];
         }
     }
-
     /** 新接口 **/
     public function new_seo($url){
         $json   = json_encode([
@@ -315,7 +315,7 @@ class Yunzz extends Facade
             'domainrank'        => $this->domainrank($url), //网站权重查询API
             'domainbacklink'    => $this->domainbacklink($url),    //网站反链查询AP
             'domainindexd'      => $this->domainindexd($url),   //网站收录查询API
-//            'domainbeian'       => $this->domainbeian($url),    //网站备案查询API
+            'domainbeian'       => $this->domainbeian($url),    //网站备案查询API
             'domain_ip_check'   => $this->domain_ip_check($url),  //Domain IP 查询API
         ]);
         return $json;
