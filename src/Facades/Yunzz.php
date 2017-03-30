@@ -2,6 +2,7 @@
 
 namespace Lambq\Sdk\Facades;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Facade;
 
 class Yunzz extends Facade
@@ -9,7 +10,8 @@ class Yunzz extends Facade
     protected $config;
 
     public function __construct() {
-        $this->config['api']   = config('sdk.zz_api');
+        $this->config['api']    = config('sdk.zz_api');
+        $this->config['host']   = config('sdk.zz_host');
     }
 
     public function file_get_contents_curl($url){
@@ -29,7 +31,7 @@ class Yunzz extends Facade
     }
     /** 域名 Whois 查询API **/
     public function whois_check($site){
-        $url    = "https://yun.zzs1.com/native_api/whois_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/whois_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
@@ -42,7 +44,7 @@ class Yunzz extends Facade
      **/
     public function alexa_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/alexa_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/alexa_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         if(array_key_exists('status',$result)){
             return [
@@ -60,118 +62,118 @@ class Yunzz extends Facade
     /** Google PR查询API **/
     public function google_page_rank_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/google_page_rank_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/google_page_rank_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /** 百度权重查询API **/
     public function baidu_rank_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/baidu_rank_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/baidu_rank_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /** 360权重查询API **/
     public function so_rank_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/so_rank_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/so_rank_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  搜狗评级查询API **/
     public function sogou_rank_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/sogou_rank_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/sogou_rank_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  Google 收录查询Api **/
     public function google_index_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/google_index_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/google_index_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  Bing 收录查询Api **/
     public function bing_index_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/bing_index_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/bing_index_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  Yahoo 收录查询Api **/
     public function yahoo_index_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/yahoo_index_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/yahoo_index_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  Baidu 收录查询Api **/
     public function baidu_index_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/baidu_index_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/baidu_index_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  360 收录查询Api **/
     public function so_index_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/so_index_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/so_index_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  搜狗 收录查询Api **/
     public function sogou_index_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/sogou_index_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/sogou_index_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  Google 反链查询Api **/
     public function google_backlink_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/google_backlink_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/google_backlink_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  Bing 反链查询Api **/
     public function bing_backlink_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/bing_backlink_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/bing_backlink_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  Yahoo 反链查询Api **/
     public function yahoo_backlink_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/yahoo_backlink_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/yahoo_backlink_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  Baidu 反链查询Api **/
     public function baidu_backlink_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/baidu_backlink_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/baidu_backlink_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  360 反链查询Api **/
     public function so_backlink_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/so_backlink_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/so_backlink_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /**  搜狗 反链查询Api **/
     public function sogou_backlink_check($site) {
         //初始化
-        $url    = "https://yun.zzs1.com/native_api/sogou_backlink_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/sogou_backlink_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         return $result;
     }
     /** 网站权重查询API **/
     public function domainrank($site){
-        $url    = "https://yun.zzs1.com/native_api/domainrank?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/domainrank?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         if($result['status'] == 0){
             return [
@@ -191,7 +193,7 @@ class Yunzz extends Facade
     }
     /** 网站反链查询AP **/
     public function domainbacklink($site){
-        $url    = "https://yun.zzs1.com/native_api/domainbacklink?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/domainbacklink?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         if($result['status'] == 0){
             return [
@@ -215,7 +217,7 @@ class Yunzz extends Facade
     }
     /** 网站收录查询API **/
     public function domainindexd($site){
-        $url    = "https://yun.zzs1.com/native_api/domainindexd?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/domainindexd?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         if($result['status'] == 0){
             return [
@@ -241,7 +243,7 @@ class Yunzz extends Facade
     public function domainbeian($site){
         preg_match('/(.*\.)?\w+\.\w+$/', $site, $matches);
         $site   = str_replace($matches[1],'',$site);
-        $url    = "https://yun.zzs1.com/native_api/domainbeian?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/domainbeian?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         if($result['success'] == 1){
             $array  = $result['result'];
@@ -280,7 +282,7 @@ class Yunzz extends Facade
     }
     /** Domain IP 查询API **/
     public function domain_ip_check($site){
-        $url    = "https://yun.zzs1.com/native_api/domain_ip_check?api_key=".$this->config['api']."&domain=$site";
+        $url    = $this->config['host']."/native_api/domain_ip_check?api_key=".$this->config['api']."&domain=$site";
         $result = $this->file_get_contents_curl($url);
         if(array_key_exists('status', $result)){
             return [
