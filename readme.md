@@ -2,7 +2,7 @@
 
 ## Installation/安装
 ```shell
-composer require "lambq/sdk:dev-master"
+composer require "lambq/sdk:1.0"
 ```
 
 ### laravel 5.*
@@ -28,5 +28,10 @@ return [
     'baidu_push_zz_site'    => '',
     'baidu_push_zz_token'   => '',
     'zz_api'                => '',
+    'zz_host'               => '',
 ];
 ```
+
+## 使用
+> 调用了phpquery扩展包
+> 返回网站的基本信息（标题、关键词、描述）
