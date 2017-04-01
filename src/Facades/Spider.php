@@ -17,8 +17,8 @@ class Spider extends Facade
     public function info(){
         $array  = [];
         $metas  = [];
-        phpQuery::newDocumentFileHTML($this->html);
-        $array['title'] = pq('title')->html();
+        phpQuery::newDocument($this->html);
+        $array['title'] = pq('title')->text();
         foreach(pq('meta') as $meta){
             $key = pq($meta)->attr('name');
             $value= pq($meta)->attr('content');
@@ -35,6 +35,13 @@ class Spider extends Facade
             $array['description'] = $array['title'];
         }
         phpQuery::$documents = [];
+        $array['keywords'] = str_replace('/', ',', $array['keywords']);
+        $array['keywords'] = str_replace('|', ',', $array['keywords']);
+        $array['keywords'] = str_replace('|', ',', $array['keywords']);
+        $array['keywords'] = str_replace('，', ',', $array['keywords']);
+        $array['keywords'] = str_replace(',,', ',', $array['keywords']);
+        $array['keywords'] = str_replace('、', ',', $array['keywords']);
+        $array['keywords'] = str_replace(' ', ',', $array['keywords']);
         return $array;
     }
 }
